@@ -1,4 +1,6 @@
+import {observer} from 'mobx-react-lite';
 import TodoStore from '../../stores/TodoStore';
+
 
 const TodoList = ({ todos }: { todos: TodoStore }) => {
   return (
@@ -11,4 +13,4 @@ const TodoList = ({ todos }: { todos: TodoStore }) => {
 };
 
 
-export default TodoList;
+export default observer(TodoList);

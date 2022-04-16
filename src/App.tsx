@@ -1,12 +1,15 @@
 import React from 'react';
-import logo from './logo.svg';
+import TodoStore from './stores/TodoStore';
+import TodoInput from './todo/todoInput/TodoInput';
+import TodoList from './todo/todoList/TodoList';
+
+const todos = new TodoStore();
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-      </header>
+      <TodoInput todos={todos} />
+      <TodoList todos={todos} />
     </div>
   );
 }
