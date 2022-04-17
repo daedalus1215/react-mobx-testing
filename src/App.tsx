@@ -18,8 +18,8 @@ const App = () => {
           unfinishedTodos: todos.unfinishedTodos,
         };
       },
-      ({ length, unfinishedTodos }) => {
-        console.log('the length = ' + length, unfinishedTodos);
+      (newValue, oldValue) => {
+        console.log(newValue, oldValue);
       },
       {
         delay: 1000,
