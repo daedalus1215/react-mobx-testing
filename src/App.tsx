@@ -11,9 +11,15 @@ const App = () => {
   const { todos } = useStore();
 
   useEffect(() => {
-    autorun(() => {
+    const disposeAutorun = autorun(() => {
       console.log(todos.list.length);
+    }, {
+      delay: 1000
     });
+
+    return () => {
+      disposeAutorun();
+    };
   }, []);
 
   const appUI = useLocalObservable(() => ({
