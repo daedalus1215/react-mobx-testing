@@ -18,6 +18,9 @@ const TodoStore = () => makeAutoObservable({
     },
     remove(todo: Todo) {
         this.list = this.list.filter(t => t.id !== todo.id);
+    },
+    get unfinishedTodos() {
+        return this.list.filter((t: Todo) => !t.isDone);
     }
 })
 

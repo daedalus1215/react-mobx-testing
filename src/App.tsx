@@ -3,26 +3,27 @@ import TodoInput from './todo/todoInput/TodoInput';
 import TodoList from './todo/todoList/TodoList';
 import styles from './App.module.css';
 import { observer, useLocalObservable } from 'mobx-react-lite';
-import { observable } from 'mobx';
 import './App.css';
+import { useStore } from './stores';
+import { autorun } from 'mobx';
 
-function App() {
+const App = () => {
+  const { todos } = useStore();
+
+  useEffect(() => {
+    autorun(() => {
+      console.log(todos.list.length);
+    });
+  }, []);
+
   const appUI = useLocalObservable(() => ({
     todosVisible: true,
     loading: false,
-    *toggleTodoVisibility() {
-      this.loading = true;
-      yield new Promise(resolve => setTimeout(() => resolve(void 0), 1000));
-      this.loading = false;
+    toggleTodoVisibility() {
       this.todosVisible = !this.todosVisible;
     },
   }));
 
-
-  useEffect(() => {
-    console.log({loading: appUI.loading});
-  }, [appUI.loading]);
-  
   return (
     <div className="app">
       <TodoInput />
@@ -30,12 +31,12 @@ function App() {
         {String(appUI.loading)}
         <h2 onClick={appUI.toggleTodoVisibility}>
           <span>{appUI.todosVisible ? '-' : '+'}</span>
-          Todos
+          Todos (unfinished {todos.unfinishedTodos.length})
         </h2>
         {appUI.todosVisible && <TodoList />}
       </div>
     </div>
   );
-}
+};
 
 export default observer(App);
