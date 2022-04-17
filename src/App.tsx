@@ -10,8 +10,15 @@ import { observable } from 'mobx';
 function App() {
   const appUI = useLocalObservable(() => ({
     todosVisible: true,
+    loading: false,
     toggleTodoVisibility() {
-      appUI.todosVisible = !appUI.todosVisible;
+      appUI.loading = true;
+      new Promise(resolve => setTimeout(() => resolve(void 0), 1000)).then(
+        () => {
+          appUI.loading = false;
+          appUI.todosVisible = !appUI.todosVisible;
+        }
+      );
     },
   }));
 
@@ -26,6 +33,7 @@ function App() {
     <div className="app">
       <TodoInput />
       <div className={styles['todo-list-wrapper']}>
+        {String(appUI.loading)}
         <h2 onClick={appUI.toggleTodoVisibility}>
           <span>{appUI.todosVisible ? '-' : '+'}</span>
           Todos
