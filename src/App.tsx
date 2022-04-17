@@ -11,15 +11,21 @@ const App = () => {
   const { todos } = useStore();
 
   useEffect(() => {
-    const disposeReaction = reaction(() => {
-      return todos.list.length;
-    }, 
-    (length:number) => {
-      console.log(length);
-    }, {
-      delay: 1000,
-      onError: err => console.log('The error', err.message)
-    });
+    const disposeReaction = reaction(
+      () => {
+        return {
+          length: todos.list.length,
+          unfinishedTodos: todos.unfinishedTodos,
+        };
+      },
+      ({ length, unfinishedTodos }) => {
+        console.log('the length = ' + length, unfinishedTodos);
+      },
+      {
+        delay: 1000,
+        onError: err => console.log('The error', err.message),
+      }
+    );
 
     return () => {
       disposeReaction();
