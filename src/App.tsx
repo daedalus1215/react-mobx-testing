@@ -5,18 +5,20 @@ import TodoList from './todo/todoList/TodoList';
 import './App.css';
 import styles from './App.module.css';
 import { observer, useLocalObservable } from 'mobx-react-lite';
-import { observable } from 'mobx';
+import { observable, runInAction } from 'mobx';
 
 function App() {
   const appUI = useLocalObservable(() => ({
     todosVisible: true,
     loading: false,
     toggleTodoVisibility() {
-      appUI.loading = true;
+      this.loading = true;
       new Promise(resolve => setTimeout(() => resolve(void 0), 1000)).then(
         () => {
-          appUI.loading = false;
-          appUI.todosVisible = !appUI.todosVisible;
+          runInAction(() => {
+            this.loading = false;
+            this.todosVisible = !appUI.todosVisible;
+          });
         }
       );
     },
