@@ -13,8 +13,10 @@ const App = () => {
   useEffect(() => {
     const disposeAutorun = autorun(() => {
       console.log(todos.list.length);
+      throw new Error("custom error");
     }, {
-      delay: 1000
+      delay: 1000,
+      onError: err => console.log('The error', err.message)
     });
 
     return () => {
