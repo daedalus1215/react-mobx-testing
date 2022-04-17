@@ -5,6 +5,7 @@ import TodoList from './todo/todoList/TodoList';
 import './App.css';
 import styles from './App.module.css';
 import { observer, useLocalObservable } from 'mobx-react-lite';
+import { observable } from 'mobx';
 
 function App() {
   const appUI = useLocalObservable(() => ({
@@ -13,6 +14,13 @@ function App() {
       appUI.todosVisible = !appUI.todosVisible;
     },
   }));
+
+  const todosVisible = observable.box(true);
+  todosVisible.observe_(({ newValue }) => {
+    console.log('the new value is', newValue);
+  });
+  todosVisible.set(false);
+  todosVisible.set(true);
 
   return (
     <div className="app">
