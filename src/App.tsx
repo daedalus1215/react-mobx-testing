@@ -9,8 +9,8 @@ const todos = new TodoStore();
 function App() {
   return (
     <div className="app">
-      <TodoInput todos={todos} />
-      <TodoList todos={todos} />
+      <TodoInput />
+      <TodoList/>
     </div>
   );
 }
