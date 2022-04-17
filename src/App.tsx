@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import TodoInput from './todo/todoInput/TodoInput';
 import TodoList from './todo/todoList/TodoList';
 import styles from './App.module.css';
@@ -18,13 +18,11 @@ function App() {
     },
   }));
 
-  const todosVisible = observable.box(true);
-  todosVisible.observe_(({ newValue }) => {
-    console.log('the new value is', newValue);
-  });
-  todosVisible.set(false);
-  todosVisible.set(true);
 
+  useEffect(() => {
+    console.log({loading: appUI.loading});
+  }, [appUI.loading]);
+  
   return (
     <div className="app">
       <TodoInput />
