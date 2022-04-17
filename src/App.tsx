@@ -5,21 +5,17 @@ import styles from './App.module.css';
 import { observer, useLocalObservable } from 'mobx-react-lite';
 import './App.css';
 import { useStore } from './stores';
-import { autorun, reaction } from 'mobx';
-import { when } from 'q';
+import { when } from 'mobx';
 
 const App = () => {
   const { todos } = useStore();
 
   useEffect(() => {
-    when(
-      () => !appUI.todosVisible,
-      () => {
-        console.log('clean up!');
-      }
-    );
-
-    return () => {};
+ 
+      const promiseWhen = when(() => !appUI.todosVisible);
+      promiseWhen.then(() => {
+        console.log('Clean up!');
+      });
   }, []);
 
   const appUI = useLocalObservable(() => ({
