@@ -6,30 +6,20 @@ import { observer, useLocalObservable } from 'mobx-react-lite';
 import './App.css';
 import { useStore } from './stores';
 import { autorun, reaction } from 'mobx';
+import { when } from 'q';
 
 const App = () => {
   const { todos } = useStore();
 
   useEffect(() => {
-    const disposeReaction = reaction(
+    when(
+      () => !appUI.todosVisible,
       () => {
-        return {
-          length: todos.list.length,
-          unfinishedTodos: todos.unfinishedTodos,
-        };
-      },
-      (newValue, oldValue) => {
-        console.log(newValue, oldValue);
-      },
-      {
-        delay: 1000,
-        onError: err => console.log('The error', err.message),
+        console.log('clean up!');
       }
     );
 
-    return () => {
-      disposeReaction();
-    };
+    return () => {};
   }, []);
 
   const appUI = useLocalObservable(() => ({
