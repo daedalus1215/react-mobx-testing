@@ -4,7 +4,7 @@ import TodoInput from './todo/todoInput/TodoInput';
 import TodoList from './todo/todoList/TodoList';
 import './App.css';
 
-const todos = new TodoStore();
+const todos = TodoStore();
 
 function App() {
   return (
