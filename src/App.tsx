@@ -1,23 +1,20 @@
-import React, { useState } from 'react';
-import TodoStore from './stores/TodoStore';
+import React from 'react';
 import TodoInput from './todo/todoInput/TodoInput';
 import TodoList from './todo/todoList/TodoList';
-import './App.css';
 import styles from './App.module.css';
 import { observer, useLocalObservable } from 'mobx-react-lite';
-import { observable, runInAction } from 'mobx';
+import { observable } from 'mobx';
+import './App.css';
 
 function App() {
   const appUI = useLocalObservable(() => ({
     todosVisible: true,
     loading: false,
-    async toggleTodoVisibility() {
+    *toggleTodoVisibility() {
       this.loading = true;
-      await new Promise(resolve => setTimeout(() => resolve(void 0), 1000));
-      runInAction(() => {
-        this.loading = false;
-        this.todosVisible = !this.todosVisible;
-      });
+      yield new Promise(resolve => setTimeout(() => resolve(void 0), 1000));
+      this.loading = false;
+      this.todosVisible = !this.todosVisible;
     },
   }));
 
