@@ -1,13 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import AppWrapper from './App';
-import store, { StoreContext } from './stores';
+import App from './App';
 
-ReactDOM.render(
-  <React.StrictMode>
-    <StoreContext.Provider value={store}>
-      <AppWrapper />
-    </StoreContext.Provider>
-  </React.StrictMode>,
-  document.getElementById('root') as HTMLElement
-);
+ReactDOM.render(<App />, document.getElementById('root') as HTMLElement);
